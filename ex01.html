@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<style>
+    .sample{
+        width: 100px;
+        height: 100px;
+        background-color: deepskyblue;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -50px;
+        margin-left: -50px;
+    }
+</style>
+
+<button id="showBtn">SHOW</button>
+<button id="hideBtn">HIDE</button>
+
+<div class="sample">
+    Sample
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        console.log("AAA");
+
+        $("#hideBtn").click(function () {
+            $(".sample").hide('slow');
+        });
+
+        $("#showBtn").click(function () {
+            $(".sample").show('slow');
+        });
+
+    })
+</script>
+
+
+</body>
+</html>

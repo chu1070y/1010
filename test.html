@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1 id="target">Hey, sub, dude~</h1>
+
+<script src="kquery.js"></script>
+
+<script>
+
+    zzz();
+
+    var target = (function (obj){
+
+        var that = obj;
+        return function() {
+            console.log(obj);
+        }
+    })($("#target"));
+
+    target();
+
+    log("--------------------------");
+
+
+
+
+</script>
+<script>
+
+    setTimeout(()=> {
+
+        $("#target").innerHTML = "WORLD";
+
+    }, 1000);
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    <input type="text" id="create">
+    <button id="button">ADD</button>
+</div>
+<div id="list">
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+    var idx = -1;
+    var ismodify = -1;
+
+    $(document).ready(
+        $('#button').on('click',(e)=>{
+                listAdd($('#create').val());
+        })
+    );
+
+    function listAdd(value) {
+
+        if(ismodify !== -1){
+            console.log("list modify");
+            $('.li'+ismodify).attr("value",value);
+            console.log($('.li'+ismodify).attr("value"));
+            console.log($('.li'+ismodify).get(0));
+            ismodify = -1;
+            return;
+        }
+
+        console.log("list add");
+
+        ++idx;
+
+        var li = "<li><input class='li" + idx + "' value='"+ value+ "' readonly>";
+        var button = "<button id='delete" + idx + "'>X</button></li> ";
+
+        $('#list').append(li + button);
+
+        //클로저 없애기위해 지역변수에 저장한다???
+        var id = idx;
+
+        //삭제하기
+        $('#delete' + id).on('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log(".li" + id);
+            $(".li" + id).remove();
+        });
+
+        //수정하기
+        $('.li'+id).on('click', (e) => {
+            console.log($("#create").val());
+            console.log($('.li'+id).attr("value"));
+            $("#create").val($('.li'+id).attr("value"));
+            ismodify = id;
+
+        });
+
+    }
+</script>
+
+</body>
+</html>

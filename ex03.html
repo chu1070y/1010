@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<style>
+    .spinner{
+        position: absolute;
+        display: none;
+    }
+
+</style>
+
+    <form class="form" action="http://www.naver.com">
+
+        <img class="spinner" src="spinner.gif">
+
+        <div>
+            <input type="text" name="uid" value="AAA">
+            <span class="msg"></span>
+            <button id="checkBtn">중복체크</button>
+        </div>
+
+        <div>
+            <input type="password" name="upw">
+        </div>
+
+        <div>
+            <input type="text" name="email">
+        </div>
+
+        <button>BTN</button>
+
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            //버튼 눌러도 이벤트가 일어나지 않게 함.
+            $("form").submit(function(e){
+                e.preventDefault();
+                console.log("button clicked")
+
+                var obj = {};
+                obj.uid = $("input[name = 'uid']").val();
+                obj.upw = $("input[name = 'upw']").val();
+                obj.email = $("input[name = 'email']").val();
+
+                $.post("http://10.10.10.96:8080/jsonEx/join", obj,function (text) {
+                    alert(text);
+                });
+
+            });
+
+            $("#checkBtn").on("click", (e) =>{
+                //form 태그 이벤트 즉, 상위 이벤트가 일어나지 않게 하는 기능.
+                e.preventDefault();
+                e.stopPropagation();
+
+                console.log("click....");
+
+                $(".spinner").show("slow");
+
+
+                var input = $("input[name = 'uid']");
+
+                //파라미터가 없으면 gettter고 있으면 setter을 나오게 한다,
+                var userInput = input.val();
+
+                $.ajax({
+                    url:"http://10.10.10.96:8080/jsonEx/idCheck",
+                    data: {str:userInput ,pw:"1234"},
+                    success: function(result){
+
+                        console.log(result);
+
+                        if(result === 'Yes') {
+                            $(".spinner").hide("slow");
+                            $(".msg").html("해당아이디는 사용 가능합니다.");
+                        }else{
+                            $(".spinner").hide("slow");
+                            $(".msg").html("사용불가");
+                            alert("사용불가..바꾸세요..");
+                        }
+
+
+                    }
+
+                });
+
+                console.log(input.val)
+            });
+        });
+
+    </script>
+
+</body>
+</html>
